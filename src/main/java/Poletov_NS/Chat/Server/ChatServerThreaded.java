@@ -45,7 +45,7 @@ public class ChatServerThreaded {
             }
         } finally {
             serverSocket.close();
-            executor.shutdown(); // Важно корректно завершить работу пула
+            executor.shutdown();
         }
     }
 

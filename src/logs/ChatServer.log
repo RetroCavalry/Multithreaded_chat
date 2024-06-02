@@ -1,10 +1,10 @@
-июн. 02, 2024 5:37:20 AM Poletov_NS.Chat.Server.ChatServer main
+июн. 02, 2024 5:54:26 AM Poletov_NS.Chat.Server.ChatServer main
 INFO: Сервер запущен и слушает порт 27015
-июн. 02, 2024 5:37:44 AM Poletov_NS.Chat.Server.ChatServer logMessage
+июн. 02, 2024 5:54:46 AM Poletov_NS.Chat.Server.ChatServer logMessage
 INFO: Пользователь1: Пользователь1 connected to chat
-июн. 02, 2024 5:37:50 AM Poletov_NS.Chat.Server.ChatServer logMessage
+июн. 02, 2024 5:54:55 AM Poletov_NS.Chat.Server.ChatServer logMessage
 INFO: Пользователь2: Пользователь2 connected to chat
-июн. 02, 2024 5:37:54 AM Poletov_NS.Chat.Server.ChatServer logMessage
-INFO: Пользователь1: Пользователь1: Привет
-июн. 02, 2024 5:37:57 AM Poletov_NS.Chat.Server.ChatServer logMessage
+июн. 02, 2024 5:54:59 AM Poletov_NS.Chat.Server.ChatServer logMessage
 INFO: Пользователь2: Пользователь2: Привет
+июн. 02, 2024 5:55:02 AM Poletov_NS.Chat.Server.ChatServer logMessage
+INFO: Пользователь1: Пользователь1: Привет

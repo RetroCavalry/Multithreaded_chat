@@ -43,7 +43,6 @@ public class ChatServer {
             }
         } finally {
             serverSocket.close();
-            // ExecutorService не используется, поэтому shutdown() не требуется
         }
     }
 
