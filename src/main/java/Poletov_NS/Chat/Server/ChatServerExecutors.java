@@ -24,7 +24,7 @@ public class ChatServerExecutors {
         logger.setLevel(Level.ALL);
         try {
             // Перезапись файла лога при каждом запуске сервера
-            FileHandler fileHandler = new FileHandler("src/logs/ChatServer.log", false);
+            FileHandler fileHandler = new FileHandler("src/logs/ChatServerExecutors.log", false);
             fileHandler.setFormatter(new SimpleFormatter());
             logger.addHandler(fileHandler);
         } catch (IOException e) {
