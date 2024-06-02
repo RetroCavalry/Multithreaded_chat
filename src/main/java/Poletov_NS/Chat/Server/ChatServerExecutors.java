@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 // Класс сервера, который принимает подключения от клиентов и обрабатывает их
-public class ChatServerThreaded {
+public class ChatServerExecutors {
     private static final int PORT = 27015;
     private static final ExecutorService executor = Executors.newFixedThreadPool(10);
     private static final List<ClientHandler> clients = Collections.synchronizedList(new ArrayList<>());

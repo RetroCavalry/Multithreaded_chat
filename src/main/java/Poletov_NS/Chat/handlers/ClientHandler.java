@@ -1,6 +1,5 @@
 package Poletov_NS.Chat.handlers;
 
-import Poletov_NS.Chat.Server.ChatServer;
 import Poletov_NS.Chat.utils.ChatLog;
 
 import java.io.BufferedReader;
@@ -32,16 +31,17 @@ public class ClientHandler implements Runnable {
     public void run() {
         try {
             // После получения имени пользователя, сообщаем о подключении в чат
-            chatLog.put(nickName + " connected to chat", this);
+            Poletov_NS.Chat.Server.ChatServerExecutors.logMessage(nickName + " connected to chat");
 
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
-                chatLog.put(nickName + ": " + inputLine, this);
+                // Отправляем сообщение всем пользователям через ChatServerThreaded
+                Poletov_NS.Chat.Server.ChatServerExecutors.broadcastMessage(nickName + ": " + inputLine, this);
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            ChatServer.removeClient(this);
+            Poletov_NS.Chat.Server.ChatServer.removeClient(this);
             try {
                 in.close();
                 out.close();

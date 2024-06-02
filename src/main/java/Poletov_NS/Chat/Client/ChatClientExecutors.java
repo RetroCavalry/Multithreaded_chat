@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ChatClientThreaded {
+public class ChatClientExecutors {
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
@@ -14,7 +14,7 @@ public class ChatClientThreaded {
     private final int serverPort;
     private final ExecutorService executor = Executors.newCachedThreadPool();
 
-    public ChatClientThreaded(String serverAddress, int serverPort) {
+    public ChatClientExecutors(String serverAddress, int serverPort) {
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
     }
@@ -53,7 +53,7 @@ public class ChatClientThreaded {
 
 
     public static void main(String[] args) {
-        ChatClient client = new ChatClient("127.0.0.1", 27015);
+        ChatClientExecutors client = new ChatClientExecutors("127.0.0.1", 27015);
         try {
             client.start();
         } catch (IOException e) {
