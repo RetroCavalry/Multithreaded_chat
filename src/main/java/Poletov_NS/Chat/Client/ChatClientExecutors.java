@@ -1,7 +1,7 @@
 package Poletov_NS.Chat.Client;
 
 import java.io.*;
-import java.net.*;
+import java.net.Socket;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -9,52 +9,55 @@ import java.util.concurrent.Executors;
 public class ChatClientExecutors {
     private Socket socket;
     private BufferedReader in;
-    private PrintWriter out;
-    private final String serverAddress;
-    private final int serverPort;
-    private final ExecutorService executor = Executors.newCachedThreadPool();
+    private BufferedWriter out;
+    private Scanner scanner;
+    private ExecutorService executorService; // Пул потоков
 
-    public ChatClientExecutors(String serverAddress, int serverPort) {
-        this.serverAddress = serverAddress;
-        this.serverPort = serverPort;
-    }
-
-    public void start() throws IOException {
-        // Подключение к серверу
+    public ChatClientExecutors(String serverAddress, int serverPort) throws IOException {
         socket = new Socket(serverAddress, serverPort);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out = new PrintWriter(socket.getOutputStream(), true);
+        out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        scanner = new Scanner(System.in);
+        executorService = Executors.newFixedThreadPool(2); // Пул для двух потоков: чтение и запись
+    }
 
+    public void start() {
         // Поток для чтения сообщений с сервера
-        executor.execute(() -> {
+        executorService.submit(() -> {
             try {
-                String receivedMessage;
-                while ((receivedMessage = in.readLine()) != null) {
-                    System.out.println(receivedMessage);
+                while (!socket.isClosed()) {
+                    String serverMessage = in.readLine();
+                    if (serverMessage != null) {
+                        System.out.println("Сервер: " + serverMessage);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
-        executor.execute(() -> {
+        // Поток для отправки сообщений на сервер
+        executorService.submit(() -> {
             try {
-                Scanner scanner = new Scanner(System.in);
                 while (!socket.isClosed()) {
-                    String messageToSend = scanner.nextLine();
-                    out.println(messageToSend);
+                    String userMessage = scanner.nextLine();
+                    if ("exit".equalsIgnoreCase(userMessage)) {
+                        socket.close();
+                    } else {
+                        out.write(userMessage);
+                        out.newLine();
+                        out.flush();
+                    }
                 }
-                scanner.close();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
     }
 
-
     public static void main(String[] args) {
-        ChatClientExecutors client = new ChatClientExecutors("127.0.0.1", 27015);
         try {
+            ChatClientExecutors client = new ChatClientExecutors("localhost", 27015);
             client.start();
         } catch (IOException e) {
             e.printStackTrace();
